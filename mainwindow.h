@@ -7,10 +7,9 @@
 #include <QList>
 #include <QSerialPortInfo>
 #include <QSerialPort>
+#include <QDebug>
 #include "enginewidget.h"
 #include "switch.h"
-#include "packet.h"
-#include <QDebug>
 
 #define QUANTITY_ENGINES 8
 #define COLUMNS_ENGINES 4
@@ -48,5 +47,7 @@ private:
 private slots:
     void slot_update_serial ();
     void slot_connect_serial ();
+    void slot_send_packet(Packet &packet);
+    void slot_read_serial();
 };
 #endif // MAINWINDOW_H

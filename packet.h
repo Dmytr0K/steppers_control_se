@@ -7,6 +7,9 @@
 #define FLAG 0xDD
 #define ESC 0x7D
 
+enum {OFF, ON};
+enum {MOVE = 10, STOP, SWITCH};
+
 class Packet : public QObject
 {
     Q_OBJECT
@@ -18,10 +21,6 @@ public:
     void setEngine_number(const char &value);
 
     void setEngine_speed(int value);
-
-    void setRelay_number(const char &value);
-
-    void setRelay_power(const char &value);
 
     void setSwitch_number(const char &value);
 
@@ -36,8 +35,6 @@ private:
     char command = 0;
     char engine_number = 0;
     int engine_speed = 0;
-    char relay_number = 0;
-    char relay_power = 0;
     char switch_number = 0;
     char switch_power = 0;
 

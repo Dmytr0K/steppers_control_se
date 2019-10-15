@@ -22,8 +22,78 @@
     <height>5000</height>
    </size>
   </property>
+  <property name="palette">
+   <palette>
+    <active>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </active>
+    <inactive>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </inactive>
+    <disabled>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </disabled>
+   </palette>
+  </property>
   <property name="windowTitle">
    <string>Steppers control</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>true</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_3">
@@ -42,6 +112,29 @@
     </item>
     <item row="0" column="2">
      <layout class="QGridLayout" name="gridLayout">
+      <item row="3" column="3">
+       <spacer name="horizontalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="2" column="2">
+       <widget class="QPushButton" name="buttonApply">
+        <property name="text">
+         <string>Apply</string>
+        </property>
+        <property name="default">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="1" colspan="2">
        <layout class="QFormLayout" name="formLayout_3">
         <item row="0" column="0">
@@ -80,7 +173,7 @@
            <number>1000000</number>
           </property>
           <property name="value">
-           <number>-100</number>
+           <number>100</number>
           </property>
          </widget>
         </item>
@@ -100,24 +193,14 @@
            <number>1000000</number>
           </property>
           <property name="value">
-           <number>100</number>
+           <number>2000</number>
           </property>
          </widget>
         </item>
        </layout>
       </item>
-      <item row="2" column="2">
-       <widget class="QPushButton" name="buttonApply">
-        <property name="text">
-         <string>Apply</string>
-        </property>
-        <property name="default">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="3">
-       <spacer name="horizontalSpacer_3">
+      <item row="1" column="0">
+       <spacer name="horizontalSpacer_4">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -142,18 +225,27 @@
         </property>
        </spacer>
       </item>
-      <item row="1" column="0">
-       <spacer name="horizontalSpacer_4">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
+      <item row="2" column="1" rowspan="2">
+       <widget class="QLabel" name="label_7">
+        <property name="maximumSize">
          <size>
-          <width>40</width>
-          <height>20</height>
+          <width>100</width>
+          <height>80</height>
          </size>
         </property>
-       </spacer>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="resources.qrc">:/res/src/mlp.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -178,7 +270,7 @@
         <property name="minimumSize">
          <size>
           <width>400</width>
-          <height>220</height>
+          <height>150</height>
          </size>
         </property>
         <property name="maximumSize">
@@ -196,7 +288,7 @@
            <x>0</x>
            <y>0</y>
            <width>398</width>
-           <height>218</height>
+           <height>172</height>
           </rect>
          </property>
         </widget>
@@ -264,16 +356,16 @@
           <property name="styleSheet">
            <string notr="true">QPushButton:!pressed
 {
-	background-color: rgb(102, 255, 102);
+	background-color: rgb(85,255,127);
 	border-radius: 5px;
-	font: 16pt &quot;Arial&quot;;
+	font: 12pt &quot;Arial&quot;;
 }
 
 QPushButton:pressed
 {
-	background-color: rgb(102, 255, 102);
+	background-color: rgb(85,255,127);
 	border-radius: 5px;
-	font: 15pt &quot;Arial&quot;;
+	font: 11pt &quot;Arial&quot;;
 }
 
 </string>
@@ -306,16 +398,16 @@ QPushButton:pressed
           <property name="styleSheet">
            <string notr="true">QPushButton:!pressed
 {
-	background-color: rgb(255, 255, 255);
+	background-color: rgb(254, 168, 248);
 	border-radius: 5px;
-	font: 16pt &quot;Arial&quot;;
+	font: 12pt &quot;Arial&quot;;
 }
 
 QPushButton:pressed
 {
-	background-color: rgb(255, 255, 255);
+	background-color: rgb(254, 168, 248);
 	border-radius: 5px;
-	font: 15pt &quot;Arial&quot;;
+	font: 11pt &quot;Arial&quot;;
 }</string>
           </property>
           <property name="text">
@@ -416,6 +508,8 @@ QPushButton:pressed
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

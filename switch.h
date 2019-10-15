@@ -2,6 +2,7 @@
 #define SWITCH_H
 
 #include <QWidget>
+#include "packet.h"
 
 namespace Ui {
 class Switch;
@@ -17,9 +18,13 @@ public:
 
 private:
     Ui::Switch *ui;
+    int switchNumber;
     bool activated = false;
     QString onStyle;
     QString offStyle;
+
+signals:
+    void readyToSendPacket(Packet &packet);
 };
 
 #endif // SWITCH_H

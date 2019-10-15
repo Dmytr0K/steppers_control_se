@@ -2,6 +2,7 @@
 
 int Packet::id = 0;
 
+
 Packet::Packet(QObject *parent) : QObject(parent)
 {
     packet_id = id++;
@@ -22,16 +23,6 @@ void Packet::setEngine_speed(int value)
     engine_speed = value;
 }
 
-void Packet::setRelay_number(const char &value)
-{
-    relay_number = value;
-}
-
-void Packet::setRelay_power(const char &value)
-{
-    relay_power = value;
-}
-
 void Packet::setSwitch_number(const char &value)
 {
     switch_number = value;
@@ -47,12 +38,14 @@ QByteArray Packet::getPacket()
     QByteArray beforeBS;
     beforeBS.append(intToBytes(packet_id));
     beforeBS.append(command);
-    beforeBS.append(engine_number);
-    beforeBS.append(intToBytes(engine_speed));
-    beforeBS.append(relay_number);
-    beforeBS.append(relay_power);
-    beforeBS.append(switch_number);
-    beforeBS.append(switch_power);
+    if (command == MOVE) {
+        beforeBS.append(engine_number);
+        beforeBS.append(intToBytes(engine_speed));
+    }
+    if (command == SWITCH) {
+        beforeBS.append(switch_number);
+        beforeBS.append(switch_power);
+    }
 
     QByteArray afterBS;
     afterBS.append(static_cast<char>(FLAG));

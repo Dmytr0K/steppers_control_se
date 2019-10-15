@@ -20,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->scrollArea_switches->setWidget(switchesWidget);
     ui->scrollArea_switches->setWidgetResizable(true);
 
+    serial = new QSerialPort(this);
+
     for (int i = 0; i < QUANTITY_ENGINES / COLUMNS_ENGINES; i++) {
         for (int j = 0; j < COLUMNS_ENGINES; j++) {
             if (COLUMNS_ENGINES * i + j < QUANTITY_ENGINES) {
@@ -27,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
                 if ((i % 2 && j % 2) || (!(i % 2) && !(j % 2))) {
                     engineWidgets[COLUMNS_ENGINES * i + j]->setAutoFillBackground(true);
                     QPalette pal = engineWidgets[COLUMNS_ENGINES * i + j]->palette();
-                    pal.setColor(engineWidgets[COLUMNS_ENGINES * i + j]->backgroundRole(), QColor(204,204,204));
+                    pal.setColor(engineWidgets[COLUMNS_ENGINES * i + j]->backgroundRole(), QColor(230,230,230));
                     engineWidgets[COLUMNS_ENGINES * i + j]->setPalette(pal);
                 }
                 enginesLayout->addWidget(engineWidgets[COLUMNS_ENGINES * i + j], i, j);
@@ -43,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent)
                 if ((i % 2 && j % 2) || (!(i % 2) && !(j % 2))) {
                     switchesWidgets[COLUMNS_SWITCHES * i + j]->setAutoFillBackground(true);
                     QPalette pal = switchesWidgets[COLUMNS_SWITCHES * i + j]->palette();
-                    pal.setColor(switchesWidgets[COLUMNS_SWITCHES * i + j]->backgroundRole(), QColor(204,204,204));
+                    pal.setColor(switchesWidgets[COLUMNS_SWITCHES * i + j]->backgroundRole(), QColor(230,230,230));
                     switchesWidgets[COLUMNS_SWITCHES * i + j]->setPalette(pal);
                 }
                 switchesLayoyt->addWidget(switchesWidgets[COLUMNS_SWITCHES * i + j], i, j);
@@ -62,8 +64,14 @@ MainWindow::MainWindow(QWidget *parent)
                     engineWidgets[i]->setMaxSpeed(maxAll);
                 }
             });
-    Packet packet;
-    qDebug() << packet.getPacket();
+    for (auto eng : engineWidgets) {
+        connect(eng, &EngineWidget::readyToSendPacket, this, &MainWindow::slot_send_packet);
+    }
+    for (auto sw : switchesWidgets) {
+        connect(sw, &Switch::readyToSendPacket, this, &MainWindow::slot_send_packet);
+    }
+    connect(serial, &QSerialPort::readyRead, this, &MainWindow::slot_read_serial);
+    slot_update_serial();
 }
 
 MainWindow::~MainWindow()
@@ -84,12 +92,63 @@ void MainWindow::slot_update_serial()
 
 void MainWindow::slot_connect_serial()
 {
-    serial->setPort(avaliable_ports[ui->combo_ports->currentIndex()]);
-    serial->open(QSerialPort::ReadOnly);
-    serial->setBaudRate(QSerialPort::Baud115200);
-    serial->setDataBits(QSerialPort::Data8);
-    serial->setFlowControl(QSerialPort::NoFlowControl);
-    serial->setParity(QSerialPort::NoParity);
-    serial->setStopBits(QSerialPort::OneStop);
+    if (!serial->isOpen()) {
+        serial->setPort(avaliable_ports[ui->combo_ports->currentIndex()]);
+        serial->open(QSerialPort::ReadWrite);
+        serial->setBaudRate(QSerialPort::Baud115200);
+        serial->setDataBits(QSerialPort::Data8);
+        serial->setFlowControl(QSerialPort::NoFlowControl);
+        serial->setParity(QSerialPort::NoParity);
+        serial->setStopBits(QSerialPort::OneStop);
+        if (serial->isOpen()) {
+            ui->button_connect->setText("Disconnect");
+            ui->button_connect->setStyleSheet("QPushButton:!pressed"
+                                              "{"
+                                              "background-color: rgb(255,164,166);"
+                                              "border-radius: 5px;"
+                                              "font: 12pt \"Arial\";"
+                                              "}"
+
+                                              "QPushButton:pressed"
+                                              "{"
+                                              "background-color: rgb(255,164,166);"
+                                              "border-radius: 5px;"
+                                              "font: 11pt \"Arial\";"
+                                              "}"
+                                              );
+        }
+    } else if (serial->isOpen()) {
+        serial->close();
+        if (!serial->isOpen()) {
+            ui->button_connect->setText("Connect");
+            ui->button_connect->setStyleSheet("QPushButton:!pressed"
+                                              "{"
+                                              "background-color: rgb(85,255,127);"
+                                              "border-radius: 5px;"
+                                              "font: 12pt \"Arial\";"
+                                              "}"
+
+                                              "QPushButton:pressed"
+                                              "{"
+                                              "background-color: rgb(85,255,127);"
+                                              "border-radius: 5px;"
+                                              "font: 11pt \"Arial\";"
+                                              "}"
+                                              );
+        }
+    }
 }
 
+void MainWindow::slot_send_packet(Packet &packet)
+{
+    QByteArray bytes = packet.getPacket();
+    serial->write(bytes);
+    qDebug() << bytes;
+}
+
+void MainWindow::slot_read_serial()
+{
+    QByteArray serialData = serial->readAll();
+    QString qSerialData = QString::fromStdString(serialData.toStdString());
+    qDebug() << qSerialData;
+}

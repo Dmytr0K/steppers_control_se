@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/res">
+        <file>src/mlp.png</file>
+    </qresource>
+</RCC>

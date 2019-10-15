@@ -3,8 +3,8 @@
 
 #include <QWidget>
 #include <math.h>
+#include "packet.h"
 
-#define OFFPER 10
 
 namespace Ui {
 class EngineWidget;
@@ -22,11 +22,15 @@ public:
     void setMaxSpeed(int value);
 
 private:
+    int engineNumber;
     Ui::EngineWidget *ui;
-    int minSpeed = -100;
-    int maxSpeed = 100;
+    int minSpeed = 100;
+    int maxSpeed = 2000;
     QString offStyle;
     QString onStyle;
+
+signals:
+    void readyToSendPacket(Packet &packet);
 };
 
 #endif // ENGINEWIDGET_H
