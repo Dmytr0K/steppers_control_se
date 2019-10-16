@@ -57,9 +57,9 @@ QByteArray Packet::getPacket()
 QByteArray Packet::intToBytes(int value)
 {
     QByteArray res;
-    res.append(static_cast<char>((value >> 4) & 0xFF));
-    res.append(static_cast<char>((value >> 3) & 0xFF));
-    res.append(static_cast<char>((value >> 2) & 0xFF));
+    res.append(static_cast<char>((value >> 24) & 0xFF));
+    res.append(static_cast<char>((value >> 16) & 0xFF));
+    res.append(static_cast<char>((value >> 8) & 0xFF));
     res.append(static_cast<char>(value & 0xFF));
     return res;
 }
