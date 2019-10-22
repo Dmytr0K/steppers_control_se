@@ -21,6 +21,32 @@ MainWindow::MainWindow(QWidget *parent)
     ui->scrollArea_switches->setWidgetResizable(true);
 
     serial = new QSerialPort(this);
+    disconnectStyle = "QPushButton:!pressed"
+                      "{"
+                      "background-color: rgb(255,164,166);"
+                      "border-radius: 5px;"
+                      "font: 12pt \"Arial\";"
+                      "}"
+
+                      "QPushButton:pressed"
+                      "{"
+                      "background-color: rgb(255,164,166);"
+                      "border-radius: 5px;"
+                      "font: 11pt \"Arial\";"
+                      "}";
+    connectStyle = "QPushButton:!pressed"
+                   "{"
+                   "background-color: rgb(85,255,127);"
+                   "border-radius: 5px;"
+                   "font: 12pt \"Arial\";"
+                   "}"
+
+                   "QPushButton:pressed"
+                   "{"
+                   "background-color: rgb(85,255,127);"
+                   "border-radius: 5px;"
+                   "font: 11pt \"Arial\";"
+                   "}";
 
     for (int i = 0; i < QUANTITY_ENGINES / COLUMNS_ENGINES; i++) {
         for (int j = 0; j < COLUMNS_ENGINES; j++) {
@@ -66,10 +92,27 @@ MainWindow::MainWindow(QWidget *parent)
             });
     for (auto eng : engineWidgets) {
         connect(eng, &EngineWidget::readyToSendPacket, this, &MainWindow::slot_send_packet);
+        connect(eng, &EngineWidget::isMove, [this] (int num) -> void {
+            if (num >= 2 && num <= 4) {
+                engineWidgets[num + 3]->setEnabled(false);
+            }
+            if (num >= 5 && num <= 7) {
+                engineWidgets[num - 3]->setEnabled(false);
+            }
+        });
+        connect(eng, &EngineWidget::isStop, [this] (int num) -> void {
+            if (num >= 2 && num <= 4) {
+                engineWidgets[num + 3]->setEnabled(true);
+            }
+            if (num >= 5 && num <= 7) {
+                engineWidgets[num - 3]->setEnabled(true);
+            }
+        });
     }
     for (auto sw : switchesWidgets) {
         connect(sw, &Switch::readyToSendPacket, this, &MainWindow::slot_send_packet);
     }
+
     connect(serial, &QSerialPort::readyRead, this, &MainWindow::slot_read_serial);
     slot_update_serial();
 }
@@ -102,39 +145,13 @@ void MainWindow::slot_connect_serial()
         serial->setStopBits(QSerialPort::OneStop);
         if (serial->isOpen()) {
             ui->button_connect->setText("Disconnect");
-            ui->button_connect->setStyleSheet("QPushButton:!pressed"
-                                              "{"
-                                              "background-color: rgb(255,164,166);"
-                                              "border-radius: 5px;"
-                                              "font: 12pt \"Arial\";"
-                                              "}"
-
-                                              "QPushButton:pressed"
-                                              "{"
-                                              "background-color: rgb(255,164,166);"
-                                              "border-radius: 5px;"
-                                              "font: 11pt \"Arial\";"
-                                              "}"
-                                              );
+            ui->button_connect->setStyleSheet(disconnectStyle);
         }
     } else if (serial->isOpen()) {
         serial->close();
         if (!serial->isOpen()) {
             ui->button_connect->setText("Connect");
-            ui->button_connect->setStyleSheet("QPushButton:!pressed"
-                                              "{"
-                                              "background-color: rgb(85,255,127);"
-                                              "border-radius: 5px;"
-                                              "font: 12pt \"Arial\";"
-                                              "}"
-
-                                              "QPushButton:pressed"
-                                              "{"
-                                              "background-color: rgb(85,255,127);"
-                                              "border-radius: 5px;"
-                                              "font: 11pt \"Arial\";"
-                                              "}"
-                                              );
+            ui->button_connect->setStyleSheet(connectStyle);
         }
     }
 }

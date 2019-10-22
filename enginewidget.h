@@ -31,6 +31,8 @@ private:
 
 signals:
     void readyToSendPacket(Packet &packet);
+    void isMove(int num);
+    void isStop(int num);
 };
 
 #endif // ENGINEWIDGET_H

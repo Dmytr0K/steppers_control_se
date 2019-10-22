@@ -40,6 +40,9 @@ private:
     QVector<EngineWidget*>engineWidgets;
     QVector<Switch*>switchesWidgets;
 
+    QString connectStyle;
+    QString disconnectStyle;
+
     QList <QSerialPortInfo> avaliable_ports;
     QStringList list_serial;
     QSerialPort *serial;

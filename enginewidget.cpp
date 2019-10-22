@@ -15,15 +15,15 @@ EngineWidget::EngineWidget(int engine_num, QWidget *parent) :
         ui->spinBox_speed->setValue(value);
         Packet *packet = new Packet;
         if (value > 0 - minSpeed && value < 0 + minSpeed) {
-            //STOP
             packet->setCommand(STOP);
             ui->dial_speed->setStyleSheet(offStyle);
+            emit isStop(engineNumber);
         } else {
-            //MOVE
             packet->setCommand(MOVE);
             packet->setEngine_number(static_cast<char>(engineNumber));
             packet->setEngine_speed(value);
             ui->dial_speed->setStyleSheet(onStyle);
+            emit isMove(engineNumber);
         }
         emit readyToSendPacket(*packet);
     });
