@@ -11,6 +11,13 @@ EngineWidget::EngineWidget(int engine_num, QWidget *parent) :
     onStyle = "background-color: rgb(33, 255, 6);";
     offStyle = "background-color: rgb(252, 2, 128);";
 
+    dialFilter = new DialFilter;
+    ui->dial_speed->installEventFilter(dialFilter);
+
+    connect(dialFilter, &DialFilter::rightButtonClick, [this] () -> void {
+                ui->dial_speed->setValue(0);
+            });
+
     connect(ui->dial_speed, &QDial::valueChanged, [this](int value) -> void {
         ui->spinBox_speed->setValue(value);
         Packet *packet = new Packet;

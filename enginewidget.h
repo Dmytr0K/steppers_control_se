@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <math.h>
 #include "packet.h"
+#include "dialfilter.h"
 
 
 namespace Ui {
@@ -28,6 +29,7 @@ private:
     int maxSpeed = 2000;
     QString offStyle;
     QString onStyle;
+    DialFilter *dialFilter;
 
 signals:
     void readyToSendPacket(Packet &packet);
