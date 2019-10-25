@@ -48,11 +48,15 @@ MainWindow::MainWindow(QWidget *parent)
                    "font: 11pt \"Arial\";"
                    "}";
 
-    for (int i = 0; i < QUANTITY_ENGINES / COLUMNS_ENGINES; i++) {
-        for (int j = 0; j < COLUMNS_ENGINES; j++) {
-            if (COLUMNS_ENGINES * i + j < QUANTITY_ENGINES) {
+    for (int i = 0; i < QUANTITY_ENGINES / COLUMNS_ENGINES; i++)
+    {
+        for (int j = 0; j < COLUMNS_ENGINES; j++)
+        {
+            if (COLUMNS_ENGINES * i + j < QUANTITY_ENGINES)
+            {
                 engineWidgets.append(new EngineWidget(COLUMNS_ENGINES * i + j + 1));
-                if ((i % 2 && j % 2) || (!(i % 2) && !(j % 2))) {
+                if ((i % 2 && j % 2) || (!(i % 2) && !(j % 2)))
+                {
                     engineWidgets[COLUMNS_ENGINES * i + j]->setAutoFillBackground(true);
                     QPalette pal = engineWidgets[COLUMNS_ENGINES * i + j]->palette();
                     pal.setColor(engineWidgets[COLUMNS_ENGINES * i + j]->backgroundRole(), QColor(230,230,230));
@@ -64,11 +68,15 @@ MainWindow::MainWindow(QWidget *parent)
         }
     }
 
-    for (int i = 0; i < QUANTITY_SWITCHES / COLUMNS_SWITCHES; i++) {
-        for (int j = 0; j < COLUMNS_SWITCHES; j++) {
-            if (COLUMNS_SWITCHES * i + j < QUANTITY_SWITCHES) {
+    for (int i = 0; i < QUANTITY_SWITCHES / COLUMNS_SWITCHES; i++)
+    {
+        for (int j = 0; j < COLUMNS_SWITCHES; j++)
+        {
+            if (COLUMNS_SWITCHES * i + j < QUANTITY_SWITCHES)
+            {
                 switchesWidgets.append(new Switch(COLUMNS_SWITCHES * i + j + 1));
-                if ((i % 2 && j % 2) || (!(i % 2) && !(j % 2))) {
+                if ((i % 2 && j % 2) || (!(i % 2) && !(j % 2)))
+                {
                     switchesWidgets[COLUMNS_SWITCHES * i + j]->setAutoFillBackground(true);
                     QPalette pal = switchesWidgets[COLUMNS_SWITCHES * i + j]->palette();
                     pal.setColor(switchesWidgets[COLUMNS_SWITCHES * i + j]->backgroundRole(), QColor(230,230,230));
@@ -82,34 +90,43 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->button_update, &QPushButton::clicked, this, &MainWindow::slot_update_serial);
     connect(ui->button_connect, &QPushButton::clicked, this, &MainWindow::slot_connect_serial);
-    connect(ui->buttonApply, &QPushButton::clicked, [this] () -> void {
+    connect(ui->buttonApply, &QPushButton::clicked, [this] () ->
+            void {
                 int minAll = ui->spinMinAll->value();
                 int maxAll = ui->spinMaxAll->value();
-                for (int i = 0; i < engineWidgets.length(); i++) {
+                for (int i = 0; i < engineWidgets.length(); i++)
+                {
                     engineWidgets[i]->setMinSpeed(minAll);
                     engineWidgets[i]->setMaxSpeed(maxAll);
                 }
             });
-    for (auto eng : engineWidgets) {
+    for (auto eng : engineWidgets)
+    {
         connect(eng, &EngineWidget::readyToSendPacket, this, &MainWindow::slot_send_packet);
-        connect(eng, &EngineWidget::isMove, [this] (int num) -> void {
-            if (num >= 2 && num <= 4) {
+        connect(eng, &EngineWidget::isMove, [this] (int num) ->
+                void {
+            if (num >= 2 && num <= 4)
+            {
                 engineWidgets[num + 3]->setEnabled(false);
             }
-            if (num >= 5 && num <= 7) {
+            if (num >= 5 && num <= 7)
+            {
                 engineWidgets[num - 3]->setEnabled(false);
             }
         });
         connect(eng, &EngineWidget::isStop, [this] (int num) -> void {
-            if (num >= 2 && num <= 4) {
+            if (num >= 2 && num <= 4)
+            {
                 engineWidgets[num + 3]->setEnabled(true);
             }
-            if (num >= 5 && num <= 7) {
+            if (num >= 5 && num <= 7)
+            {
                 engineWidgets[num - 3]->setEnabled(true);
             }
         });
     }
-    for (auto sw : switchesWidgets) {
+    for (auto sw : switchesWidgets)
+    {
         connect(sw, &Switch::readyToSendPacket, this, &MainWindow::slot_send_packet);
     }
 
@@ -127,7 +144,8 @@ void MainWindow::slot_update_serial()
     ui->combo_ports->clear();
     list_serial.clear();
     avaliable_ports = QSerialPortInfo::availablePorts();
-    for (auto ser : avaliable_ports) {
+    for (auto ser : avaliable_ports)
+    {
         list_serial.append(ser.portName());
     }
     ui->combo_ports->addItems(list_serial);
@@ -135,7 +153,8 @@ void MainWindow::slot_update_serial()
 
 void MainWindow::slot_connect_serial()
 {
-    if (!serial->isOpen()) {
+    if (!serial->isOpen())
+    {
         serial->setPort(avaliable_ports[ui->combo_ports->currentIndex()]);
         serial->open(QSerialPort::ReadWrite);
         serial->setBaudRate(QSerialPort::Baud115200);
@@ -143,13 +162,17 @@ void MainWindow::slot_connect_serial()
         serial->setFlowControl(QSerialPort::NoFlowControl);
         serial->setParity(QSerialPort::NoParity);
         serial->setStopBits(QSerialPort::OneStop);
-        if (serial->isOpen()) {
+        if (serial->isOpen())
+        {
             ui->button_connect->setText("Disconnect");
             ui->button_connect->setStyleSheet(disconnectStyle);
         }
-    } else if (serial->isOpen()) {
+    }
+    else if (serial->isOpen())
+    {
         serial->close();
-        if (!serial->isOpen()) {
+        if (!serial->isOpen())
+        {
             ui->button_connect->setText("Connect");
             ui->button_connect->setStyleSheet(connectStyle);
         }

@@ -38,11 +38,13 @@ QByteArray Packet::getPacket()
     QByteArray beforeBS;
     beforeBS.append(intToBytes(packet_id));
     beforeBS.append(command);
-    if (command == MOVE) {
+    if (command == MOVE)
+    {
         beforeBS.append(engine_number);
         beforeBS.append(intToBytes(engine_speed));
     }
-    if (command == SWITCH) {
+    if (command == SWITCH)
+    {
         beforeBS.append(switch_number);
         beforeBS.append(switch_power);
     }
@@ -57,18 +59,21 @@ QByteArray Packet::getPacket()
 QByteArray Packet::intToBytes(int value)
 {
     QByteArray res;
-    res.append(static_cast<char>((value >> 24) & 0xFF));
-    res.append(static_cast<char>((value >> 16) & 0xFF));
-    res.append(static_cast<char>((value >> 8) & 0xFF));
     res.append(static_cast<char>(value & 0xFF));
+    res.append(static_cast<char>((value >> 8) & 0xFF));
+    res.append(static_cast<char>((value >> 16) & 0xFF));
+    res.append(static_cast<char>((value >> 24) & 0xFF));
+
     return res;
 }
 
 QByteArray Packet::byteStuffing(QByteArray bytes)
 {
     QByteArray res;
-    for (auto i : bytes) {
-        if (static_cast<unsigned char>(i) == FLAG || static_cast<unsigned char>(i) == ESC) {
+    for (auto i : bytes)
+    {
+        if (static_cast<unsigned char>(i) == FLAG || static_cast<unsigned char>(i) == ESC)
+        {
             res.append(ESC);
         }
         res.append(i);

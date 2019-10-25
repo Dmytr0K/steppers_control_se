@@ -8,7 +8,7 @@
 #define ESC 0x7D
 
 enum {OFF, ON};
-enum {MOVE = 10, STOP, SWITCH};
+enum {MOVE = 0x10, STOP, SWITCH};
 
 class Packet : public QObject
 {
