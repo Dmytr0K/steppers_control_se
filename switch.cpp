@@ -46,15 +46,18 @@ Switch::Switch(int num, QWidget *parent) :
                      "font-size: 8pt;"
                      "}");
 
-    connect(ui->buttonChange, &QPushButton::clicked, [this]() -> void {
+    connect(ui->buttonChange, &QPushButton::clicked, [this]() ->
+            void {
                 Packet *packet = new Packet;
                 packet->setCommand(SWITCH);
                 packet->setSwitch_number(static_cast<char>(switchNumber));
-                if (activated) {
+                if (activated)
+                {
                     //OFF
                     packet->setSwitch_power(OFF);
                     ui->buttonChange->setStyleSheet(offStyle);
-                } else {
+                } else
+                {
                     //ON
                     packet->setSwitch_power(ON);
                     ui->buttonChange->setStyleSheet(onStyle);
