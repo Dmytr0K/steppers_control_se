@@ -38,7 +38,7 @@ QByteArray Packet::getPacket()
     QByteArray beforeBS;
     beforeBS.append(intToBytes(packet_id));
     beforeBS.append(command);
-    if (command == MOVE)
+    if (command == RUN)
     {
         beforeBS.append(engine_number);
         beforeBS.append(intToBytes(engine_speed));
@@ -48,12 +48,22 @@ QByteArray Packet::getPacket()
         beforeBS.append(switch_number);
         beforeBS.append(switch_power);
     }
+    if (command == MOVE) {
+        beforeBS.append(engine_number);
+        beforeBS.append(intToBytes(engine_speed));
+        beforeBS.append(intToBytes(engine_steps));
+    }
 
     QByteArray afterBS;
     afterBS.append(static_cast<char>(FLAG));
     afterBS.append(byteStuffing(beforeBS));
     afterBS.append(static_cast<char>(FLAG));
     return afterBS;
+}
+
+void Packet::setEngine_steps(int value)
+{
+    engine_steps = value;
 }
 
 QByteArray Packet::intToBytes(int value)

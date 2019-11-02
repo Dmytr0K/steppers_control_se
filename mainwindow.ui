@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>610</width>
-    <height>517</height>
+    <width>999</width>
+    <height>752</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -100,7 +100,27 @@
     <item row="0" column="0">
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
+       <widget class="Line" name="line_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
         <item>
          <widget class="QLabel" name="label">
           <property name="sizePolicy">
@@ -158,8 +178,8 @@
           </property>
           <property name="font">
            <font>
-            <family>Arial</family>
-            <pointsize>10</pointsize>
+            <family>Arial&amp;quot</family>
+            <pointsize>12</pointsize>
             <weight>50</weight>
             <italic>false</italic>
             <bold>false</bold>
@@ -170,14 +190,14 @@
 {
 	background-color: rgb(254, 168, 248);
 	border-radius: 5px;
-	font: 10pt &quot;Arial&quot;;
+	font: 12pt &quot;Arial&amp;quot&quot;;
 }
 
 QPushButton:pressed
 {
 	background-color: rgb(254, 168, 248);
 	border-radius: 5px;
-	font: 10pt &quot;Arial&quot;;
+	font: 11pt &quot;Arial&amp;quot&quot;;
 }</string>
           </property>
           <property name="text">
@@ -210,17 +230,15 @@ QPushButton:pressed
 {
 	background-color: rgb(85,255,127);
 	border-radius: 5px;
-	font: 10pt &quot;Arial&quot;;
+	font: 12pt &quot;Arial&amp;quot&quot;;
 }
 
 QPushButton:pressed
 {
 	background-color: rgb(85,255,127);
 	border-radius: 5px;
-	font: 10pt &quot;Arial&quot;;
-}
-
-</string>
+	font: 11pt &quot;Arial&amp;quot&quot;;
+}</string>
           </property>
           <property name="text">
            <string>Connect</string>
@@ -252,7 +270,27 @@ QPushButton:pressed
        </layout>
       </item>
       <item>
+       <widget class="Line" name="line">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
        <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
         <item>
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
@@ -332,22 +370,6 @@ QPushButton:pressed
          </layout>
         </item>
         <item>
-         <spacer name="horizontalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::MinimumExpanding</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
          <widget class="QScrollArea" name="scrollArea_switches">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -378,12 +400,25 @@ QPushButton:pressed
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>203</width>
-             <height>125</height>
+             <width>243</width>
+             <height>144</height>
             </rect>
            </property>
           </widget>
          </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </item>
@@ -403,8 +438,8 @@ QPushButton:pressed
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>588</width>
-           <height>327</height>
+           <width>971</width>
+           <height>496</height>
           </rect>
          </property>
         </widget>

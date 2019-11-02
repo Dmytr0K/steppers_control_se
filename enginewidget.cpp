@@ -26,7 +26,7 @@ EngineWidget::EngineWidget(int engine_num, QWidget *parent) :
             ui->dial_speed->setStyleSheet(offStyle);
             emit isStop(engineNumber);
         } else {
-            packet->setCommand(MOVE);
+            packet->setCommand(RUN);
             packet->setEngine_number(static_cast<char>(engineNumber));
             packet->setEngine_speed(value);
             ui->dial_speed->setStyleSheet(onStyle);
@@ -34,6 +34,25 @@ EngineWidget::EngineWidget(int engine_num, QWidget *parent) :
         }
         emit readyToSendPacket(*packet);
     });
+
+    connect(ui->button_left, &QPushButton::pressed, [this] () -> void {
+                Packet *packet = new Packet;
+                packet->setCommand(MOVE);
+                packet->setEngine_number(static_cast<char>(engineNumber));
+                packet->setEngine_speed(ui->spinBox_stm_speed->value() * -1);
+                packet->setEngine_steps(ui->spinbox_steps->value());
+                emit readyToSendPacket(*packet);
+            });
+
+    connect(ui->button_right, &QPushButton::pressed, [this] () -> void {
+                Packet *packet = new Packet;
+                packet->setCommand(MOVE);
+                packet->setEngine_number(static_cast<char>(engineNumber));
+                packet->setEngine_speed(ui->spinBox_stm_speed->value());
+                packet->setEngine_steps(ui->spinbox_steps->value());
+                emit readyToSendPacket(*packet);
+            });
+
     connect(ui->spinBox_speed, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), [this](int value) -> void {
         ui->dial_speed->setValue(value);
     });
