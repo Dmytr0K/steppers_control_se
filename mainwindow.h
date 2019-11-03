@@ -10,6 +10,7 @@
 #include <QDebug>
 #include "enginewidget.h"
 #include "switch.h"
+#include "packet.h"
 
 #define QUANTITY_ENGINES 8
 #define COLUMNS_ENGINES 4
@@ -47,10 +48,16 @@ private:
     QStringList list_serial;
     QSerialPort *serial;
 
+    QByteArray recievedPacket;
+
 private slots:
     void slot_update_serial ();
     void slot_connect_serial ();
     void slot_send_packet(Packet &packet);
     void slot_read_serial();
+    void slot_packet_handler(QByteArray packet);
+
+signals:
+    void new_packet(QByteArray packet);
 };
 #endif // MAINWINDOW_H

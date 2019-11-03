@@ -131,6 +131,7 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     connect(serial, &QSerialPort::readyRead, this, &MainWindow::slot_read_serial);
+    connect(this, &MainWindow::new_packet, this, &MainWindow::slot_packet_handler);
     slot_update_serial();
 }
 
@@ -188,7 +189,33 @@ void MainWindow::slot_send_packet(Packet &packet)
 
 void MainWindow::slot_read_serial()
 {
-    QByteArray serialData = serial->readAll();
-    QString qSerialData = QString::fromStdString(serialData.toStdString());
-    qDebug() << qSerialData;
+    static bool packet_reception = false;
+    static bool is_last_esc = false;
+    char temp_buffer;
+    while (serial->bytesAvailable()) {
+        serial->read(&temp_buffer, 1);
+        if (!is_last_esc && static_cast<uint8_t>(temp_buffer) == FLAG) {
+            if (!packet_reception) {
+                packet_reception = true;
+                recievedPacket.clear();
+            } else {
+                packet_reception = false;
+                emit new_packet(recievedPacket);
+            }
+        } else {
+            if (!is_last_esc && static_cast<uint8_t>(temp_buffer) == ESC) {
+                is_last_esc = true;
+            } else {
+                recievedPacket.append(temp_buffer);
+                if (is_last_esc) {
+                    is_last_esc = false;
+                }
+            }
+        }
+    }
+}
+
+void MainWindow::slot_packet_handler(QByteArray packet)
+{
+    qDebug() << packet;
 }
