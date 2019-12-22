@@ -11,8 +11,9 @@
 #include "enginewidget.h"
 #include "switch.h"
 #include "packet.h"
+#include "flexor.h"
 
-#define QUANTITY_ENGINES 8
+#define QUANTITY_ENGINES 12
 #define COLUMNS_ENGINES 4
 #define QUANTITY_SWITCHES 12
 #define COLUMNS_SWITCHES 6
@@ -34,6 +35,8 @@ private:
 
     QWidget *enginesWidget;
     QWidget *switchesWidget;
+    QWidget *flexorParentWidget;
+    Flexor *flexorWidget;
 
     QGridLayout *enginesLayout;
     QGridLayout *switchesLayoyt;

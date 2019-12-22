@@ -56,6 +56,7 @@ EngineWidget::EngineWidget(int engine_num, QWidget *parent) :
     connect(ui->spinBox_speed, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), [this](int value) -> void {
         ui->dial_speed->setValue(value);
     });
+
     connect(ui->spinMin, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), [this]() -> void {
         ui->dial_speed->setDisabled(true);
         ui->dial_speed->setValue(0);

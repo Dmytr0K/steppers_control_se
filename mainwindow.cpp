@@ -11,6 +11,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     enginesWidget = new QWidget;
     switchesWidget = new QWidget;
+    flexorParentWidget = new QWidget;
+    flexorWidget = new Flexor(flexorParentWidget);
 
     enginesWidget->setLayout(enginesLayout);
     switchesWidget->setLayout(switchesLayoyt);
@@ -19,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->scrollArea_engines->setWidgetResizable(true);
     ui->scrollArea_switches->setWidget(switchesWidget);
     ui->scrollArea_switches->setWidgetResizable(true);
+    ui->tabWidget->addTab(flexorParentWidget, "Bending machine");
 
     serial = new QSerialPort(this);
     disconnectStyle = "QPushButton:!pressed"
@@ -100,6 +103,7 @@ MainWindow::MainWindow(QWidget *parent)
                     engineWidgets[i]->setMaxSpeed(maxAll);
                 }
             });
+    connect(flexorWidget, &Flexor::readyToSendPacket, this, &MainWindow::slot_send_packet);
     for (auto eng : engineWidgets)
     {
         connect(eng, &EngineWidget::readyToSendPacket, this, &MainWindow::slot_send_packet);
@@ -184,7 +188,7 @@ void MainWindow::slot_send_packet(Packet &packet)
 {
     QByteArray bytes = packet.getPacket();
     serial->write(bytes);
-    qDebug() << bytes;
+    qDebug() << endl << bytes;
 }
 
 void MainWindow::slot_read_serial()
