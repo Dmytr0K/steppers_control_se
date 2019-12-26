@@ -12,7 +12,7 @@
 #include "switch.h"
 #include "packet.h"
 
-#define QUANTITY_ENGINES 8
+#define QUANTITY_ENGINES 12
 #define COLUMNS_ENGINES 4
 #define QUANTITY_SWITCHES 12
 #define COLUMNS_SWITCHES 6

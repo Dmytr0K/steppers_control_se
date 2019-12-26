@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     dialfilter.cpp \
     enginewidget.cpp \
+    flexor.cpp \
     main.cpp \
     mainwindow.cpp \
     packet.cpp \
@@ -26,12 +27,14 @@ SOURCES += \
 HEADERS += \
     dialfilter.h \
     enginewidget.h \
+    flexor.h \
     mainwindow.h \
     packet.h \
     switch.h
 
 FORMS += \
     enginewidget.ui \
+    flexor.ui \
     mainwindow.ui \
     switch.ui
 
