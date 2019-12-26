@@ -7,10 +7,12 @@
 #include <QList>
 #include <QSerialPortInfo>
 #include <QSerialPort>
+#include <QThread>
 #include <QDebug>
 #include "enginewidget.h"
 #include "switch.h"
 #include "packet.h"
+#include "flexor.h"
 
 #define QUANTITY_ENGINES 12
 #define COLUMNS_ENGINES 4
@@ -34,6 +36,8 @@ private:
 
     QWidget *enginesWidget;
     QWidget *switchesWidget;
+    QWidget *flexorParentWidget;
+    Flexor *flexorWidget;
 
     QGridLayout *enginesLayout;
     QGridLayout *switchesLayoyt;

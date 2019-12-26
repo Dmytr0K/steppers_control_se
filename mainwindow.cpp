@@ -11,6 +11,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     enginesWidget = new QWidget;
     switchesWidget = new QWidget;
+    flexorParentWidget = new QWidget;
+    flexorWidget = new Flexor(flexorParentWidget);
 
     enginesWidget->setLayout(enginesLayout);
     switchesWidget->setLayout(switchesLayoyt);
@@ -19,8 +21,15 @@ MainWindow::MainWindow(QWidget *parent)
     ui->scrollArea_engines->setWidgetResizable(true);
     ui->scrollArea_switches->setWidget(switchesWidget);
     ui->scrollArea_switches->setWidgetResizable(true);
+    ui->tabWidget->addTab(flexorParentWidget, "Bending machine");
 
     serial = new QSerialPort(this);
+
+    QThread *thread_New = new QThread;//Создаем поток для порта платы
+        serial = new QSerialPort(this);//Создаем обьект по классу
+        serial->moveToThread(thread_New);//помешаем класс  в поток
+        serial->moveToThread(thread_New);//Помещаем сам порт в поток
+
     disconnectStyle = "QPushButton:!pressed"
                       "{"
                       "background-color: rgb(255,164,166);"
@@ -100,6 +109,7 @@ MainWindow::MainWindow(QWidget *parent)
                     engineWidgets[i]->setMaxSpeed(maxAll);
                 }
             });
+    connect(flexorWidget, &Flexor::readyToSendPacket, this, &MainWindow::slot_send_packet);
     for (auto eng : engineWidgets)
     {
         connect(eng, &EngineWidget::readyToSendPacket, this, &MainWindow::slot_send_packet);
@@ -158,7 +168,7 @@ void MainWindow::slot_connect_serial()
     {
         serial->setPort(avaliable_ports[ui->combo_ports->currentIndex()]);
         serial->open(QSerialPort::ReadWrite);
-        serial->setBaudRate(QSerialPort::Baud115200);
+        serial->setBaudRate(QSerialPort::Baud9600);
         serial->setDataBits(QSerialPort::Data8);
         serial->setFlowControl(QSerialPort::NoFlowControl);
         serial->setParity(QSerialPort::NoParity);
@@ -184,7 +194,8 @@ void MainWindow::slot_send_packet(Packet &packet)
 {
     QByteArray bytes = packet.getPacket();
     serial->write(bytes);
-    qDebug() << bytes;
+    serial->waitForBytesWritten();
+    qDebug() << endl << bytes;
 }
 
 void MainWindow::slot_read_serial()
