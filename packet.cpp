@@ -53,6 +53,9 @@ QByteArray Packet::getPacket()
         beforeBS.append(intToBytes(engine_speed));
         beforeBS.append(intToBytes(engine_steps));
     }
+    if (command == STOP) {
+        beforeBS.append(engine_number);
+    }
 
     QByteArray afterBS;
     afterBS.append(static_cast<char>(FLAG));

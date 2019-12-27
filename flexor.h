@@ -9,6 +9,7 @@
 #include <math.h>
 
 #define STEPS_PER_ROTATE 1600
+#define MAX_SPEED 3200
 
 #define VAL_N_m ui->value_N_m->value()
 
@@ -50,7 +51,10 @@ signals:
 private:
     Ui::Flexor *ui;
     QVector <double> xi, yi;
+    QVector<double> dxi, dyi;
     QVector <int> xi_steps, yi_steps;
+    QVector <int> vxi, vyi;
+    QVector <double> ti;
     QVector <QCheckBox> check_widgets;
 
 private slots:

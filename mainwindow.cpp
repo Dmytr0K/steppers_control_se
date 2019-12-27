@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tabWidget->addTab(flexorParentWidget, "Bending machine");
 
     serial = new QSerialPort(this);
+
     disconnectStyle = "QPushButton:!pressed"
                       "{"
                       "background-color: rgb(255,164,166);"
@@ -162,7 +163,7 @@ void MainWindow::slot_connect_serial()
     {
         serial->setPort(avaliable_ports[ui->combo_ports->currentIndex()]);
         serial->open(QSerialPort::ReadWrite);
-        serial->setBaudRate(QSerialPort::Baud115200);
+        serial->setBaudRate(QSerialPort::Baud9600);
         serial->setDataBits(QSerialPort::Data8);
         serial->setFlowControl(QSerialPort::NoFlowControl);
         serial->setParity(QSerialPort::NoParity);
@@ -188,6 +189,7 @@ void MainWindow::slot_send_packet(Packet &packet)
 {
     QByteArray bytes = packet.getPacket();
     serial->write(bytes);
+    serial->waitForBytesWritten();
     qDebug() << endl << bytes;
 }
 

@@ -7,6 +7,7 @@
 #include <QList>
 #include <QSerialPortInfo>
 #include <QSerialPort>
+#include <QThread>
 #include <QDebug>
 #include "enginewidget.h"
 #include "switch.h"
