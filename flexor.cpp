@@ -48,9 +48,9 @@ Flexor::Flexor(QWidget *parent) :
 
                 for (int i = 0; i < VAL_C_N; i++) {
                     xi.append(VAL_R_Fl - VAL_R_Fl*cos(VAL_delta_phi * i));
-                    xi_steps.append(static_cast<int>((xi[i] * VAL_P1) / (2 * M_PI) * STEPS_PER_ROTATE));
+                    xi_steps.append(static_cast<int>((xi[i] / VAL_P1) * STEPS_PER_ROTATE));
                     yi.append(VAL_R_Fl * sin(VAL_delta_phi * i));
-                    yi_steps.append(static_cast<int>((yi[i] * VAL_P2) / (2 * M_PI) * STEPS_PER_ROTATE));
+                    yi_steps.append(static_cast<int>((yi[i] / VAL_P2) * STEPS_PER_ROTATE));
                 }
 
                 for (int i = 0; i < VAL_C_N - 1; i++) {
@@ -87,6 +87,8 @@ Flexor::Flexor(QWidget *parent) :
                     }
                 }
 
+                qDebug() << "xi: " << xi << endl;
+                qDebug() << "yi: " << yi << endl;
                 qDebug() << "Скорости икса: " << vxi << endl;
                 qDebug() << "Скорости игоря: " << vyi << endl;
                 qDebug() << "Шоги икса: " << xi_steps << endl;
@@ -121,7 +123,7 @@ void Flexor::slot_calc() {
     ui->value_alpha_work->setValue(VAL_alpha_m /1.6);
     ui->value_N_work->setValue(VAL_N_m/1.6);
     double d = VAL_d_0 + VAL_N_m * VAL_P_w;
-    //        qDebug() << d;
+            qDebug() << d;
     double gamma = 2*asin((VAL_b/2 - d/2)/VAL_c);
     //        qDebug() << (gamma * 360) / (2 * M_PI);
     ui->value_R_sup->setValue((VAL_b / 2) / sin(gamma/2));

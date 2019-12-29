@@ -9,6 +9,7 @@
 #include <QSerialPort>
 #include <QThread>
 #include <QDebug>
+#include <QThread>
 #include "enginewidget.h"
 #include "switch.h"
 #include "packet.h"

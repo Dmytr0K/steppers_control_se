@@ -24,8 +24,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>692</width>
-        <height>476</height>
+        <width>686</width>
+        <height>470</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
@@ -53,7 +53,7 @@
               <bool>true</bool>
              </property>
              <property name="maximum">
-              <double>1000.000000000000000</double>
+              <double>100000.000000000000000</double>
              </property>
             </widget>
            </item>
@@ -122,8 +122,11 @@
          </item>
          <item row="0" column="0">
           <widget class="QDial" name="dial_flexor">
+           <property name="minimum">
+            <number>11</number>
+           </property>
            <property name="maximum">
-            <number>42</number>
+            <number>414</number>
            </property>
            <property name="singleStep">
             <number>1</number>
@@ -388,7 +391,7 @@
            <item row="0" column="1">
             <widget class="QDoubleSpinBox" name="value_N_m">
              <property name="maximum">
-              <double>160.000000000000000</double>
+              <double>420.000000000000000</double>
              </property>
             </widget>
            </item>

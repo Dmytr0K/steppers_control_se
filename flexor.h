@@ -11,7 +11,7 @@
 #define STEPS_PER_ROTATE 1600
 #define MAX_SPEED 3200
 
-#define VAL_N_m ui->value_N_m->value()
+#define VAL_N_m ui->value_N_m->value()/10
 
 #define VAL_alpha_m ui->value_alpha_m->value()
 #define VAL_R_sup ui->value_R_sup->value()
