@@ -22,6 +22,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     packet.cpp \
+    packetmanager.cpp \
     switch.cpp
 
 HEADERS += \
@@ -30,6 +31,7 @@ HEADERS += \
     flexor.h \
     mainwindow.h \
     packet.h \
+    packetmanager.h \
     switch.h
 
 FORMS += \
